@@ -1,0 +1,12 @@
+# Build artifacts
+/.cache/
+/build/
+/*.o
+/*.obj
+/*.exe
+/*.out
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake

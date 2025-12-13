@@ -1,0 +1,127 @@
+# .clang-format for modern C++26 with BarrC-inspired style
+---
+Language:        Cpp
+
+# ----------------------
+# Indentation & Tabs
+# ----------------------
+IndentWidth:     4
+ContinuationIndentWidth: 4
+TabWidth:        4
+UseTab:          Never
+AccessModifierOffset: -4
+NamespaceIndentation: None
+IndentCaseLabels: true
+IndentGotoLabels: true
+IndentPPDirectives: None
+IndentWrappedFunctionNames: false
+
+# ----------------------
+# Alignment
+# ----------------------
+AlignAfterOpenBracket: Align
+AlignConsecutiveMacros: true
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignEscapedNewlines: Left
+AlignOperands:   true
+AlignTrailingComments: true
+BinPackArguments: false
+BinPackParameters: false
+ExperimentalAutoDetectBinPacking: false
+
+# ----------------------
+# Braces / Blocks
+# ----------------------
+BraceWrapping:
+  AfterCaseLabel:  false
+  AfterClass:      true
+  AfterControlStatement: true
+  AfterEnum:       true
+  AfterFunction:   true
+  AfterNamespace:  false
+  AfterObjCDeclaration: true
+  AfterStruct:     true
+  AfterUnion:      true
+  AfterExternBlock: true
+  BeforeCatch:     true
+  BeforeElse:      true
+  IndentBraces:    false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+
+BreakBeforeBraces: Custom
+BreakBeforeBinaryOperators: All
+BreakBeforeTernaryOperators: true
+BreakInheritanceList: BeforeComma
+BreakConstructorInitializers: BeforeComma
+BreakConstructorInitializersBeforeComma: false
+AlwaysBreakAfterDefinitionReturnType: TopLevel
+AlwaysBreakAfterReturnType: TopLevelDefinitions
+AlwaysBreakTemplateDeclarations: Yes
+AlwaysBreakBeforeMultilineStrings: true
+
+# ----------------------
+# Spaces
+# ----------------------
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterControlStatements: true
+  AfterFunctionDefinitionName: true
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: true
+SpaceBeforeAssignmentOperators: true
+SpaceInEmptyBlock: false
+SpaceInEmptyParentheses: false
+SpaceBeforeSquareBrackets: false
+SpacesBeforeTrailingComments: 1
+Cpp11BracedListStyle: true
+AllowShortLambdasOnASingleLine: All
+AllowShortFunctionsOnASingleLine: None
+AllowShortBlocksOnASingleLine: Never
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+
+# ----------------------
+# Column / line length
+# ----------------------
+ColumnLimit:     100
+MaxEmptyLinesToKeep: 1
+
+# ----------------------
+# Includes
+# ----------------------
+IncludeBlocks:   Preserve
+IncludeCategories:
+  - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
+    Priority:        2
+  - Regex:           '^(<|"(gtest|gmock|isl|json)/)'
+    Priority:        3
+  - Regex:           '.*'
+    Priority:        1
+SortIncludes:    false
+SortUsingDeclarations: false
+IncludeIsMainRegex: '(Test)?$'
+IncludeIsMainSourceRegex: ''
+
+# ----------------------
+# Miscellaneous
+# ----------------------
+PointerAlignment: Left
+DerivePointerAlignment: false
+ReflowComments:  true
+InsertBraces:    false
+CompactNamespaces: false
+DeriveLineEnding: true
+BreakStringLiterals: true
+StatementMacros:
+  - Q_UNUSED
+  - QT_REQUIRE_VERSION
+  - foreach
+  - Q_FOREACH
+  - BOOST_FOREACH
+FixNamespaceComments: false
+...
