@@ -7,6 +7,13 @@ export namespace util::parse {
 
 template <typename T = s64>
 T
+to_number (const char character)
+{
+    return static_cast<s64>(character) - 48;
+}
+
+template <typename T = s64>
+T
 to_number (const sv token)
 {
     T value{};
