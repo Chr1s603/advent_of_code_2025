@@ -44,17 +44,17 @@ struct Day02
         if (string.size() % seq_len)
             return false;
 
-        bool invalid{true};
         for (u64 pos = seq_len; pos <= string.size() - seq_len; pos += seq_len)
-            invalid &= string.substr(0, seq_len) == string.substr(pos, seq_len);
+            if (string.substr(0, seq_len) != string.substr(pos, seq_len))
+                return false;
 
-        return invalid;
+        return true;
     }
 
     static bool is_really_invalid (const s64 id)
     {
         const auto id_str{std::to_string(id)};
-        for (u64 seq_end = 1; seq_end < id_str.size(); seq_end++)
+        for (u64 seq_end = 1; seq_end < id_str.size() / 2 + 1; seq_end++)
             if (does_string_only_consist_of_sequence(id_str, id_str.substr(0, seq_end)))
                 return true;
         return false;
