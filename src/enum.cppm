@@ -16,4 +16,10 @@ get_nth_of_each_element (const R& range)
     return std::vector<NthType>(view.begin(), view.end());
 }
 
+bool
+contains (const auto& container, const auto& val)
+{
+    return std::find(container.begin(), container.end(), val) != container.end();
+}
+
 }
