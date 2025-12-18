@@ -22,4 +22,20 @@ contains (const auto& container, const auto& val)
     return std::find(container.begin(), container.end(), val) != container.end();
 }
 
+auto
+x (const auto& p)
+{
+    return std::get<0>(p);
+}
+auto
+y (const auto& p)
+{
+    return std::get<1>(p);
+}
+auto
+z (const auto& p)
+{
+    return std::get<2>(p);
+}
+
 }

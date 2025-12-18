@@ -13,6 +13,9 @@ using arr = std::array<T, L>;
 export template <typename T>
 using vec = std::vector<T>;
 
+export template <typename T>
+using list = std::list<T>;
+
 export template <typename T1, typename T2>
 using pair = std::pair<T1, T2>;
 
