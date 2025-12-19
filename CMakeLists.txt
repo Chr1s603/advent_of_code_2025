@@ -46,6 +46,7 @@ target_sources(aoc_common
         PUBLIC
         FILE_SET aoc_common_modules TYPE CXX_MODULES FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/src/types.cppm"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/parallel.cppm"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/console.cppm"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/enum.cppm"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/parse.cppm"

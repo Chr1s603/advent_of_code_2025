@@ -3,6 +3,7 @@ export module aoc.day02;
 import std;
 import util.types;
 import util.parse;
+import util.parallel;
 
 export namespace day02 {
 
@@ -27,15 +28,20 @@ struct Day02
         return out;
     }
 
-    static bool is_invalid (const s64 id)
+    static s64 sum_of_invalid_ids_from_range (const pair<s64, s64> id_range)
     {
-        const auto id_str{std::to_string(id)};
-        if (id_str.size() % 2)
-            return false;
+        s64 sum_of_invalid_ids{0};
+        for (s64 id = id_range.first; id <= id_range.second; id++)
+        {
+            const auto id_str{std::to_string(id)};
+            if (id_str.size() % 2)
+                continue;
 
-        const auto first_half{id_str.substr(0, id_str.size() / 2)};
-        const auto second_half{id_str.substr(id_str.size() / 2, id_str.size())};
-        return first_half == second_half;
+            const auto first_half{id_str.substr(0, id_str.size() / 2)};
+            const auto second_half{id_str.substr(id_str.size() / 2, id_str.size())};
+            sum_of_invalid_ids += (first_half == second_half) * id;
+        }
+        return sum_of_invalid_ids;
     }
 
     static bool does_string_only_consist_of_sequence (const sv string, const sv sequence)
@@ -60,24 +66,24 @@ struct Day02
         return false;
     }
 
+    static s64 sum_of_really_invalid_ids_from_range (const pair<s64, s64> id_range)
+    {
+        s64 sum_of_invalid_ids{0};
+        for (s64 id = id_range.first; id <= id_range.second; id++)
+            sum_of_invalid_ids += is_really_invalid(id) * id;
+
+        return sum_of_invalid_ids;
+    }
+
     static s64 part1 (const parsed& list_of_id_ranges)
     {
-        s64 sum_of_invalids{0};
-        for (const auto [begin, end] : list_of_id_ranges)
-            for (s64 id = begin; id <= end; id++)
-                sum_of_invalids += is_invalid(id) * id;
-
-        return sum_of_invalids;
+        return util::parallel::sum_async(list_of_id_ranges, &Day02::sum_of_invalid_ids_from_range);
     }
 
     static s64 part2 (const parsed& list_of_id_ranges)
     {
-        s64 sum_of_invalids{0};
-        for (const auto [begin, end] : list_of_id_ranges)
-            for (s64 id = begin; id <= end; id++)
-                sum_of_invalids += is_really_invalid(id) * id;
-
-        return sum_of_invalids;
+        return util::parallel::sum_async(list_of_id_ranges,
+                                         &Day02::sum_of_really_invalid_ids_from_range);
     }
 
     static constexpr pair<s64, s64> expected ()
