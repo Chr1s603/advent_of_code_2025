@@ -3,6 +3,7 @@ export module aoc.day12;
 import std;
 import util.types;
 import util.parse;
+import util.parallel;
 
 using namespace util::parse;
 
@@ -199,21 +200,16 @@ struct Day12
 
     static s64 part1 (const parsed& in)
     {
-        s64 valid_regions{0};
-        for (const auto& r : in.second)
-        {
-            s64 required_area = 0;
+        return util::parallel::sum_async(in.second, [&] (const region& r) -> s64 {
+            s64 required_area{0};
             for (u64 i = 0; i < in.first.size(); ++i)
                 required_area += present_area(in.first[i]) * r.present_occurences[i];
             if (required_area > r.width * r.height)
-                continue;
+                return 0;
 
-            region current = r;
-            if (try_place_present(in.first, 0, 0, current))
-                valid_regions++;
-        }
-
-        return valid_regions;
+            region current{r};
+            return try_place_present(in.first, 0, 0, current) ? 1 : 0;
+        });
     }
 
     static s64 part2 (const parsed&)
