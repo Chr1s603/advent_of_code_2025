@@ -15,7 +15,7 @@ read_file (const str& path)
     // Get length of string
     str s;
     f.seekg(0, std::ios::end);
-    s.resize(static_cast<s64>(f.tellg()));
+    s.resize(static_cast<u64>(f.tellg()));
 
     // Read file into string
     f.seekg(0, std::ios::beg);

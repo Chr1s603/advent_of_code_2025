@@ -29,7 +29,7 @@ struct Day05
             r = {std::min(r.first, db[idx].first), std::max(r.second, db[idx].second)};
 
         for (u64 i = colliding.size(); i-- > 0;)
-            db.erase(db.begin() + colliding[i]);
+            db.erase(db.begin() + static_cast<s64>(colliding[i]));
 
         db.emplace_back(r);
     }

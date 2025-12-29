@@ -40,25 +40,25 @@ struct Day12
             // rotate_0deg
             for (s64 y = 0; y < h; y++)
                 for (s64 x = 0; x < w; x++)
-                    if (local_occupy[y][x])
+                    if (local_occupy[static_cast<u64>(y)][static_cast<u64>(x)])
                         occupied_cells[0].emplace_back(x, y);
 
             // rotate_90deg
             for (s64 y = 0; y < h; y++)
                 for (s64 x = 0; x < w; x++)
-                    if (local_occupy[y][x])
+                    if (local_occupy[static_cast<u64>(y)][static_cast<u64>(x)])
                         occupied_cells[1].emplace_back(h - 1 - y, x);
 
             // rotate_180deg
             for (s64 y = 0; y < h; y++)
                 for (s64 x = 0; x < w; x++)
-                    if (local_occupy[y][x])
+                    if (local_occupy[static_cast<u64>(y)][static_cast<u64>(x)])
                         occupied_cells[2].emplace_back(w - 1 - x, h - 1 - y);
 
             // rotate_270deg
             for (s64 y = 0; y < h; y++)
                 for (s64 x = 0; x < w; x++)
-                    if (local_occupy[y][x])
+                    if (local_occupy[static_cast<u64>(y)][static_cast<u64>(x)])
                         occupied_cells[3].emplace_back(y, w - 1 - x);
         }
 
@@ -67,13 +67,13 @@ struct Day12
             switch (r)
             {
                 case roate_t::rotate_0deg:
-                    return local_occupy[0].size();
+                    return s64(local_occupy[0].size());
                 case roate_t::rotate_90deg:
-                    return local_occupy.size();
+                    return s64(local_occupy.size());
                 case roate_t::rotate_180deg:
-                    return local_occupy[0].size();
+                    return s64(local_occupy[0].size());
                 case roate_t::rotate_270deg:
-                    return local_occupy.size();
+                    return s64(local_occupy.size());
             }
             std::unreachable();
         }
@@ -83,13 +83,13 @@ struct Day12
             switch (r)
             {
                 case roate_t::rotate_0deg:
-                    return local_occupy.size();
+                    return s64(local_occupy.size());
                 case roate_t::rotate_90deg:
-                    return local_occupy[0].size();
+                    return s64(local_occupy[0].size());
                 case roate_t::rotate_180deg:
-                    return local_occupy.size();
+                    return s64(local_occupy.size());
                 case roate_t::rotate_270deg:
-                    return local_occupy[0].size();
+                    return s64(local_occupy[0].size());
             }
             std::unreachable();
         }
@@ -137,7 +137,7 @@ struct Day12
             struct region r;
             r.width    = to_number(region_dimension_strs[0]);
             r.height   = to_number(region_dimension_strs[1]);
-            r.occupied = vec<bool>(r.width * r.height, false);
+            r.occupied = vec<bool>(u64(r.width * r.height), false);
             for (const auto& occurence : present_occurence_strs)
                 r.present_occurences.emplace_back(to_number(occurence));
             regions.emplace_back(std::move(r));
@@ -157,13 +157,13 @@ struct Day12
         changed.clear();
         for (const auto& [dx, dy] : p.occupied_cells[rot_idx])
         {
-            s64 idx = (y + dy) * region.width + (x + dx);
-            if (region.occupied[idx])
+            cs64 idx = (y + dy) * region.width + (x + dx);
+            if (region.occupied[static_cast<u64>(idx)])
                 return false;
             changed.push_back(idx);
         }
-        for (s64 idx : changed)
-            region.occupied[idx] = true;
+        for (cs64 idx : changed)
+            region.occupied[static_cast<u64>(idx)] = true;
         return true;
     }
 
@@ -183,8 +183,8 @@ struct Day12
                     {
                         if (try_place_present(ps, p_idx, current_occurence + 1, r))
                             return true;
-                        for (s64 idx : changed)
-                            r.occupied[idx] = false;
+                        for (cs64 idx : changed)
+                            r.occupied[static_cast<u64>(idx)] = false;
                     }
         return false;
     }

@@ -50,12 +50,12 @@ struct Day04
         cs64 width{static_cast<s64>(map[0].size())};
         if (x < 0 || x >= width || y < 0 || y >= height)
             return type::none;
-        return map[y][x];
+        return map[static_cast<u64>(y)][static_cast<u64>(x)];
     }
 
     static void set_type (parsed& map, cs64 x, cs64 y, const type t)
     {
-        map[y][x] = t;
+        map[static_cast<u64>(y)][static_cast<u64>(x)] = t;
     }
 
     static u64 get_sourrounding_paper_count (const parsed& map, cs64 x, cs64 y)

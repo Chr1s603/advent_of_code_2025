@@ -107,17 +107,14 @@ struct Day06
             {
                 str num_str;
                 for (u64 line = 0; line < num_lines; ++line)
-                {
-                    char c = e.number_strings[line][digit];
-                    if (c != ' ')
+                    if (char c = e.number_strings[line][digit]; c != ' ')
                         num_str += c;
-                }
 
-                s64 number = num_str.empty() ? 0 : util::parse::to_number(num_str);
+                cs64 complete_number = num_str.empty() ? 0 : util::parse::to_number(num_str);
                 if (e.op == op::add)
-                    line_result += number;
+                    line_result += complete_number;
                 else
-                    line_result *= number;
+                    line_result *= complete_number;
             }
 
             sum_of_answers += line_result;

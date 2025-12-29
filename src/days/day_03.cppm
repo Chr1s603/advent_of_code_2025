@@ -34,32 +34,42 @@ struct Day03
         return out;
     }
 
-    static u64
-    get_best_idx_for_bank (const bank& b, cu64 battery_idx, cu64 battery_count, cu64 start_idx)
+    static s64
+    get_best_idx_for_bank (const bank& b, cs64 battery_idx, cs64 battery_count, cs64 start_idx)
     {
-        const u64 elements_needed_for_lower_orders = battery_count - battery_idx;
-        const u64 elements_to_take                 = b.size() - elements_needed_for_lower_orders;
+        cs64 elements_needed_for_lower_orders{battery_count - battery_idx};
+        cs64 elements_to_take{static_cast<s64>(b.size()) - elements_needed_for_lower_orders};
 
         auto it = std::max_element(b.begin() + start_idx, b.begin() + elements_to_take);
         return std::distance(b.begin(), it);
     }
 
-    static s64 get_max_joltage_of_bank (const bank& b, cu64 max_batteries_per_bank)
+    static s64 get_max_joltage_of_bank (const bank& b, cs64 max_batteries_per_bank)
     {
         s64 max_joltage{0};
-        u64 last_orders_idx{0};
-        for (u64 order = 0; order <= max_batteries_per_bank; order++)
+        s64 place_value{1};
+
+        for (s64 i = 0; i < max_batteries_per_bank; ++i)
+            place_value *= 10; // NOTE: Avoids nasty casts w std::pow which is double only
+
+        s64 last_orders_idx{0};
+        for (s64 order = 0; order <= max_batteries_per_bank; ++order)
         {
-            cu64 best_idx_of_this_order{
-                get_best_idx_for_bank(b, order, max_batteries_per_bank, last_orders_idx)};
-            last_orders_idx = best_idx_of_this_order + 1;
-            max_joltage += b[best_idx_of_this_order] * std::pow(10, max_batteries_per_bank - order);
+            using index_t = bank::size_type;
+
+            index_t best_idx_of_this_order{static_cast<index_t>(
+                get_best_idx_for_bank(b, order, max_batteries_per_bank, last_orders_idx))};
+
+            last_orders_idx = static_cast<s64>(best_idx_of_this_order) + 1;
+
+            max_joltage += b[best_idx_of_this_order] * place_value;
+            place_value /= 10;
         }
 
         return max_joltage;
     }
 
-    static s64 get_max_joltage (const parsed& banks, cu64 max_batteries_per_bank)
+    static s64 get_max_joltage (const parsed& banks, cs64 max_batteries_per_bank)
     {
         vec<std::future<s64>> tasks;
         tasks.reserve(banks.size());

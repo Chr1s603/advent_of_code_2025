@@ -12,30 +12,31 @@ get_nth_of_each_element (const R& range)
     using Elem    = std::ranges::range_value_t<R>;
     using NthType = std::tuple_element_t<N, Elem>;
 
-    auto view = range | std::views::transform([] (auto const& elem) { return get<N>(elem); });
+    auto view
+        = range | std::views::transform([] (auto const& elem) -> NthType { return get<N>(elem); });
     return std::vector<NthType>(view.begin(), view.end());
 }
 
-bool
-contains (const auto& container, const auto& val)
+auto
+contains (const auto& container, const auto& val) -> bool
 {
     return std::find(container.begin(), container.end(), val) != container.end();
 }
 
 auto
-x (const auto& p)
+x (const auto& container)
 {
-    return std::get<0>(p);
+    return std::get<0>(container);
 }
 auto
-y (const auto& p)
+y (const auto& container)
 {
-    return std::get<1>(p);
+    return std::get<1>(container);
 }
 auto
-z (const auto& p)
+z (const auto& container)
 {
-    return std::get<2>(p);
+    return std::get<2>(container);
 }
 
 }

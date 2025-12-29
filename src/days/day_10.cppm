@@ -25,7 +25,7 @@ struct Day10
     {
         str result{current_lights};
         for (const auto& light_idx : button)
-            result[light_idx] = result[light_idx] == '#' ? '.' : '#';
+            result[u64(light_idx)] = result[u64(light_idx)] == '#' ? '.' : '#';
         return result;
     }
 
@@ -141,7 +141,7 @@ struct Day10
         // Enumerates all button subsets that reproduce a given parity pattern
         auto parity_patterns = [&] (const str& parity_lights) -> vec<vec<s64>> {
             vec<vec<s64>> patterns;
-            const s64     n = m.button_wiring.size();
+            const s64     n{static_cast<s64>(m.button_wiring.size())};
 
             // Each button is pressed at most once (mod 2)
             for (s64 mask = 0; mask < (1 << n); mask++)
@@ -149,7 +149,7 @@ struct Day10
                 str lights(m.joltage_requirements.size(), '.');
                 for (s64 i = 0; i < n; i++)
                     if ((mask >> i) & 1)
-                        lights = get_lights_after_press(lights, m.button_wiring[i]);
+                        lights = get_lights_after_press(lights, m.button_wiring[u64(i)]);
                 if (lights == parity_lights)
                 {
                     vec<s64> pressed;
@@ -193,7 +193,7 @@ struct Day10
                 // Remove the odd (parity) contribution
                 for (s64 i : pressed)
                 {
-                    for (s64 idx : m.button_wiring[i])
+                    for (s64 idx : m.button_wiring[u64(i)])
                     {
                         // Defensive check against malformed input
                         if (idx < 0 || idx >= s64(new_jolts.size()))
@@ -201,7 +201,7 @@ struct Day10
                             valid = false;
                             break;
                         }
-                        new_jolts[idx]--;
+                        new_jolts[u64(idx)]--;
                     }
                     if (!valid)
                         break;
@@ -225,7 +225,7 @@ struct Day10
 
                 s64 cost = dfs(new_jolts);
                 if (cost != std::numeric_limits<s64>::max())
-                    best = std::min(best, s64(2 * cost + pressed.size()));
+                    best = std::min(best, 2 * cost + s64(pressed.size()));
             }
 
             return cache[jolts] = best;
