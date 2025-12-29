@@ -1,13 +1,13 @@
 # Advent of Code 2025 — C++26 solutions
 
-This repo contains my C++ solutions for hte Advent of Code 2025.
+This repo contains my C++ solutions for the Advent of Code 2025.
 The idea was to get my feet wet with C++ modules, but as I found out, support is still very experimental...
 
 **Prerequisites:** Linux, Clang with C++ modules support (tested with Clang 21.1.6), Ninja generator (required for module builds), and libc++ (to precompile std module for `import std` support),
 
 **Quick start**
 
-Use the provided CMake presets (they use the Ninja generator):
+Use the provided CMake presets (they use the Ninja generator, Unix makefiles don't like modules...):
 
 ```bash
 git clone <repo>
