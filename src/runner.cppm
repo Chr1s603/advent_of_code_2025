@@ -39,13 +39,16 @@ struct timer
 };
 
 template <typename Day>
-    requires requires(Day d, sv text) {
-        { Day::parse(text) };
-        { Day::part1(Day::parse(text)) };
-        { Day::part2(Day::parse(text)) };
-        { Day::expected() };
-        { Day::name } -> std::convertible_to<std::string_view>;
-    }
+concept DayStatic = requires(sv text) {
+    { Day::parse(text) };
+    { Day::part1(Day::parse(text)) };
+    { Day::part2(Day::parse(text)) };
+    { Day::expected() };
+    { Day::name } -> std::convertible_to<std::string_view>;
+    { Day::number } -> std::convertible_to<s64>;
+};
+
+template <DayStatic Day>
 run_result
 run_text_impl (sv text)
 {
@@ -70,14 +73,7 @@ run_text_impl (sv text)
     return {Day::number, p1, p2, ms_parse, ms_p1, ms_p2};
 }
 
-template <typename Day>
-    requires requires(Day d, sv text) {
-        { Day::parse(text) };
-        { Day::part1(Day::parse(text)) };
-        { Day::part2(Day::parse(text)) };
-        { Day::expected() };
-        { Day::name } -> std::convertible_to<std::string_view>;
-    }
+template <DayStatic Day>
 consteval runner
 make_runner ()
 {
