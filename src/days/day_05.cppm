@@ -3,13 +3,14 @@ export module aoc.day05;
 import std;
 import util.parse;
 import util.types;
+import aoc.day_common;
 
-export namespace day05 {
+export namespace day {
 
-struct Day05
+template <>
+struct Day<5>
 {
-    static constexpr s64 number = 5;
-    static constexpr sv  name{"Day 05: Cafeteria"};
+    static constexpr sv name{"Day 05: Cafeteria"};
 
     using range = pair<s64, s64>;
     struct database
@@ -93,4 +94,4 @@ struct Day05
     }
 };
 
-} // namespace day05
+}

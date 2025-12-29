@@ -3,13 +3,14 @@ export module aoc.day06;
 import std;
 import util.types;
 import util.parse;
+import aoc.day_common;
 
-export namespace day06 {
+export namespace day {
 
-struct Day06
+template <>
+struct Day<6>
 {
-    static constexpr s64 number = 6;
-    static constexpr sv  name{"Day 06: Trash Compactor"};
+    static constexpr sv name{"Day 06: Trash Compactor"};
 
     enum class op
     {
@@ -129,4 +130,4 @@ struct Day06
     }
 };
 
-} // namespace day06
+}

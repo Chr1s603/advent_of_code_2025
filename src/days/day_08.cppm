@@ -4,13 +4,14 @@ import std;
 import util.types;
 import util.parse;
 import util.enumerable;
+import aoc.day_common;
 
-export namespace day08 {
+export namespace day {
 
-struct Day08
+template <>
+struct Day<8>
 {
-    static constexpr s64 number = 8;
-    static constexpr sv  name{"Day 08: Playground"};
+    static constexpr sv name{"Day 08: Playground"};
 
     using position         = std::tuple<s64, s64, s64>;
     using junction_box_map = vec<position>;
@@ -150,4 +151,4 @@ struct Day08
     }
 };
 
-} // namespace day08
+}

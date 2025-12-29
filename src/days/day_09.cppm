@@ -4,15 +4,16 @@ import std;
 import util.types;
 import util.parse;
 import util.enumerable;
+import aoc.day_common;
 
 using namespace util::enumerable;
 
-export namespace day09 {
+export namespace day {
 
-struct Day09
+template <>
+struct Day<9>
 {
-    static constexpr s64 number = 9;
-    static constexpr sv  name{"Day 09: Movie Theater"};
+    static constexpr sv name{"Day 09: Movie Theater"};
 
     using position      = pair<s64, s64>;
     using red_positions = vec<position>;
@@ -204,4 +205,4 @@ struct Day09
     }
 };
 
-} // namespace day09
+}

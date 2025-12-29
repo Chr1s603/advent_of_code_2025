@@ -8,7 +8,6 @@ export namespace aoc {
 
 struct run_result
 {
-    s64 day;
     s64 part1;
     s64 part2;
     f64 ms_parse;
@@ -20,9 +19,9 @@ using day_function = run_result (*)(sv);
 
 struct runner
 {
-    s64          day{};
     sv           name{};
     day_function run_text{};
+    s64          day{};
 };
 
 struct timer
@@ -45,7 +44,6 @@ concept DayStatic = requires(sv text) {
     { Day::part2(Day::parse(text)) };
     { Day::expected() };
     { Day::name } -> std::convertible_to<std::string_view>;
-    { Day::number } -> std::convertible_to<s64>;
 };
 
 template <DayStatic Day>
@@ -65,19 +63,19 @@ run_text_impl (sv text)
 
     const auto [exp_p1, exp_p2] = Day::expected();
     if (p1 != exp_p1)
-        console::warn(std::format("Day {} Part 1 incorrect", Day::number), p1, exp_p1);
+        console::warn("Part 1 incorrect", p1, exp_p1);
 
     if (p2 != exp_p2)
-        console::warn(std::format("Day {} Part 2 incorrect", Day::number), p2, exp_p2);
+        console::warn("Part 2 incorrect", p2, exp_p2);
 
-    return {Day::number, p1, p2, ms_parse, ms_p1, ms_p2};
+    return {p1, p2, ms_parse, ms_p1, ms_p2};
 }
 
 template <DayStatic Day>
 consteval runner
-make_runner ()
+make_runner (s64 day)
 {
-    return runner{Day::number, Day::name, &run_text_impl<Day>};
+    return runner{Day::name, &run_text_impl<Day>, day};
 }
 
 inline str

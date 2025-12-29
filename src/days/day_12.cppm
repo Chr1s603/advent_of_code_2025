@@ -4,15 +4,16 @@ import std;
 import util.types;
 import util.parse;
 import util.parallel;
+import aoc.day_common;
 
 using namespace util::parse;
 
-export namespace day12 {
+export namespace day {
 
-struct Day12
+template <>
+struct Day<12>
 {
-    static constexpr s64 number = 12;
-    static constexpr sv  name{"Day 12: Christmas Tree Farm"};
+    static constexpr sv name{"Day 12: Christmas Tree Farm"};
 
     enum class roate_t
     {
@@ -223,4 +224,4 @@ struct Day12
     }
 };
 
-} // namespace day12
+}

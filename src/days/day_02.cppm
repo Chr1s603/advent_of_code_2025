@@ -4,13 +4,14 @@ import std;
 import util.types;
 import util.parse;
 import util.parallel;
+import aoc.day_common;
 
-export namespace day02 {
+export namespace day {
 
-struct Day02
+template <>
+struct Day<2>
 {
-    static constexpr s64 number = 2;
-    static constexpr sv  name{"Day 02: Gift Shop"};
+    static constexpr sv name{"Day 02: Gift Shop"};
 
     using id_range = pair<s64, s64>;
     using parsed   = vec<id_range>;
@@ -77,13 +78,13 @@ struct Day02
 
     static s64 part1 (const parsed& list_of_id_ranges)
     {
-        return util::parallel::sum_async(list_of_id_ranges, &Day02::sum_of_invalid_ids_from_range);
+        return util::parallel::sum_async(list_of_id_ranges, &Day<2>::sum_of_invalid_ids_from_range);
     }
 
     static s64 part2 (const parsed& list_of_id_ranges)
     {
         return util::parallel::sum_async(list_of_id_ranges,
-                                         &Day02::sum_of_really_invalid_ids_from_range);
+                                         &Day<2>::sum_of_really_invalid_ids_from_range);
     }
 
     static constexpr pair<s64, s64> expected ()
@@ -91,4 +92,5 @@ struct Day02
         return {30323879646, 43872163557};
     }
 };
-} // namespace day02
+
+}

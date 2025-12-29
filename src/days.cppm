@@ -5,6 +5,7 @@ import std;
 import util.types;
 
 import aoc.runner;
+import aoc.day_common;
 import aoc.day01;
 import aoc.day02;
 import aoc.day03;
@@ -19,16 +20,16 @@ import aoc.day11;
 import aoc.day12;
 
 export namespace aoc {
-inline constexpr arr<runner, 12> registry = {make_runner<day01::Day01>(),
-                                             make_runner<day02::Day02>(),
-                                             make_runner<day03::Day03>(),
-                                             make_runner<day04::Day04>(),
-                                             make_runner<day05::Day05>(),
-                                             make_runner<day06::Day06>(),
-                                             make_runner<day07::Day07>(),
-                                             make_runner<day08::Day08>(),
-                                             make_runner<day09::Day09>(),
-                                             make_runner<day10::Day10>(),
-                                             make_runner<day11::Day11>(),
-                                             make_runner<day12::Day12>()};
+
+template <std::size_t... Is>
+consteval arr<runner, sizeof...(Is)>
+make_registry_from_idx (std::index_sequence<Is...>)
+{
+    arr<runner, sizeof...(Is)> res{};
+    ((res[Is] = make_runner<day::Day<Is + 1>>(static_cast<s64>(Is + 1))), ...);
+    return res;
+}
+
+inline constexpr auto registry = make_registry_from_idx(std::make_index_sequence<12>{});
+
 }

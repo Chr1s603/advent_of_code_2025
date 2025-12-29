@@ -1,30 +1,39 @@
 import std;
+import util.console;
+import util.types;
 import aoc.runner;
 import aoc.days;
 import aoc.io;
 
-int main(int argc, char** argv) {
+int
+main (int argc, char** argv)
+{
     using namespace aoc;
 
-    if (argc == 2) {
-        int day = std::stoi(argv[1]);
-        auto it = std::find_if(aoc::registry.begin(), aoc::registry.end(),
-                               [day](auto& r){ return r.day == day; });
-        if (it == aoc::registry.end()) {
-            std::cerr << "No such day: " << day << "\n";
-            return 1;
-        }
+    bool single{false};
+    s64 selected_day{0};
+    if (argc >= 2)
+    {
+        const char* arg = argv[1];
+        auto [ptr, ec] = std::from_chars(arg, arg + std::strlen(arg), selected_day);
+        if (ec == std::errc{})
+            single = true;
+    }
 
-        auto input = io::read_file(input_path_for(day));
-        auto result = it->run_text(input);
-        std::println("Day {:02d}: p1={} p2={} [{:.3f}ms parse, {:.3f}ms p1, {:.3f}ms p2]",
-                     day, result.part1, result.part2, result.ms_parse, result.ms_p1, result.ms_p2);
-    } else {
-        for (auto& r : aoc::registry) {
-            auto input = io::read_file(input_path_for(r.day));
-            auto result = r.run_text(input);
-            std::println("Day {:02d}: p1={} p2={} [{:.3f}ms parse, {:.3f}ms p1, {:.3f}ms p2]",
-                         r.day, result.part1, result.part2, result.ms_parse, result.ms_p1, result.ms_p2);
-        }
+    for (auto& r : aoc::registry)
+    {
+        if (single && r.day != selected_day)
+            continue;
+
+        auto input  = io::read_file(input_path_for(r.day));
+        auto result = r.run_text(input);
+        console::print_color(
+            std::format("{}: p1={} p2={} [{:.3f}ms parse, {:.3f}ms p1, {:.3f}ms p2]\n",
+                        r.name,
+                        result.part1,
+                        result.part2,
+                        result.ms_parse,
+                        result.ms_p1,
+                        result.ms_p2));
     }
 }

@@ -4,13 +4,14 @@ import std;
 import util.types;
 import util.parse;
 import util.enumerable;
+import aoc.day_common;
 
-export namespace day11 {
+export namespace day {
 
-struct Day11
+template <>
+struct Day<11>
 {
-    static constexpr s64 number = 11;
-    static constexpr sv  name{"Day 11: Reactor"};
+    static constexpr sv name{"Day 11: Reactor"};
 
     struct device
     {
@@ -112,4 +113,4 @@ struct Day11
     }
 };
 
-} // namespace day11
+}

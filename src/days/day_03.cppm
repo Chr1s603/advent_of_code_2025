@@ -3,13 +3,14 @@ export module aoc.day03;
 import std;
 import util.parse;
 import util.types;
+import aoc.day_common;
 
-export namespace day03 {
+export namespace day {
 
-struct Day03
+template <>
+struct Day<3>
 {
-    static constexpr s64 number = 3;
-    static constexpr sv  name{"Day 03: Lobby"};
+    static constexpr sv name{"Day 03: Lobby"};
 
     using bank   = vec<s64>;
     using parsed = vec<bank>;
@@ -105,4 +106,4 @@ struct Day03
     }
 };
 
-} // namespace day03
+}

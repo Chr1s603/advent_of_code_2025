@@ -4,13 +4,14 @@ import std;
 import util.types;
 import util.parse;
 import util.enumerable;
+import aoc.day_common;
 
-export namespace day07 {
+export namespace day {
 
-struct Day07
+template <>
+struct Day<7>
 {
-    static constexpr s64 number = 7;
-    static constexpr sv  name{"Day 07: Laboratories"};
+    static constexpr sv name{"Day 07: Laboratories"};
 
     static constexpr s64 no_cache{-1};
     enum class type
@@ -125,4 +126,4 @@ struct Day07
     }
 };
 
-} // namespace day07
+}

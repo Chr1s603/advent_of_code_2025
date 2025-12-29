@@ -4,13 +4,14 @@ import std;
 import util.types;
 import util.parallel;
 import util.parse;
+import aoc.day_common;
 
-export namespace day10 {
+export namespace day {
 
-struct Day10
+template <>
+struct Day<10>
 {
-    static constexpr s64 number = 10;
-    static constexpr sv  name{"Day 10: Factory"};
+    static constexpr sv name{"Day 10: Factory"};
 
     struct machine
     {
@@ -115,7 +116,7 @@ struct Day10
 
     static s64 part1 (const machines& machines)
     {
-        return util::parallel::sum_async(machines, &Day10::get_fewest_press_combination);
+        return util::parallel::sum_async(machines, &Day<10>::get_fewest_press_combination);
     }
 
     // Recursive parity-based reduction:
@@ -236,7 +237,7 @@ struct Day10
 
     static s64 part2 (const machines& machines)
     {
-        return util::parallel::sum_async(machines, &Day10::fewest_presses);
+        return util::parallel::sum_async(machines, &Day<10>::fewest_presses);
     }
 
     static constexpr pair<s64, s64> expected ()
@@ -245,4 +246,4 @@ struct Day10
     }
 };
 
-} // namespace day10
+}

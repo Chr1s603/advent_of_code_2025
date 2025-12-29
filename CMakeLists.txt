@@ -85,12 +85,14 @@ target_sources(aoc_common
         src/parse.cppm
         src/runner.cppm
         src/io.cppm
+        src/days/day_common.cppm
 )
 
 # ===========================================
 # Discover day modules
 # ===========================================
 file(GLOB AOC_DAY_MODULES CONFIGURE_DEPENDS "src/days/day_*.cppm")
+list(FILTER AOC_DAY_MODULES EXCLUDE REGEX ".*day_common\\.cppm$")
 
 add_library(aoc_days SHARED)
 add_dependencies(aoc_days precompile_std)
@@ -156,11 +158,13 @@ file(GLOB_RECURSE AOC_ALL_PCMS
     "${CMAKE_BINARY_DIR}/CMakeFiles/advent_of_code_2025.dir/*.pcm"
 )
 
-add_custom_target(copy_pcm ALL
-    DEPENDS aoc_common aoc_days advent_of_code_2025
-    COMMAND ${CMAKE_COMMAND} -E make_directory "${AOC_PCM_DIR}"
-    COMMAND ${CMAKE_COMMAND} -E copy ${AOC_ALL_PCMS} "${AOC_PCM_DIR}"
-)
+if(AOC_ALL_PCMS)
+    add_custom_target(copy_pcm ALL
+        DEPENDS aoc_common aoc_days advent_of_code_2025
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${AOC_PCM_DIR}"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${AOC_ALL_PCMS} "${AOC_PCM_DIR}"
+    )
+endif()
 
 # ===========================================
 # Clang static analyzer target (always produces HTML)
